@@ -1,0 +1,50 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	group = 'com.monster.lochness'
+	version = '1.0.0-SNAPSHOT'
+}
+
+subprojects {
+
+	apply plugin: 'war'
+	apply plugin: 'spring-boot'
+
+	jar {
+		baseName = 'LochNess'
+		version = '1.0.0-SNAPSHOT'
+	}
+
+	sourceCompatibility = 1.8
+
+	repositories {
+		mavenCentral()
+	}
+
+
+	dependencies {
+
+		compile("org.springframework.boot:spring-boot-starter-web"){
+			exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+		}
+
+		compile('org.springframework.boot:spring-boot-starter-jetty')
+
+		compile('org.springframework.boot:spring-boot-starter-aop')
+
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	}
+}

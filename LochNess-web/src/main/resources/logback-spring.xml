@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+
+    <springProperty scope="context" name="rootLoggingLevel" source="logging.level.root"
+                    defaultValue="INFO"/>
+
+    <springProperty scope="context" name="webLogFile" source="logging.web.file"
+                    defaultValue="web.log"/>
+
+    <springProperty scope="context" name="coreLogFile" source="logging.core.file"
+                    defaultValue="core.log"/>
+
+    <springProperty scope="context" name="dalLogFile" source="logging.dal.file"
+                    defaultValue="dal.log"/>
+
+    <springProperty scope="context" name="commonLogFile" source="logging.common.file"
+                    defaultValue="common.log"/>
+
+
+
+    <appender name="All"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+
+    <appender name="WEB"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${webLogFile}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${webLogFile}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+
+    <appender name="CORE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${coreLogFile}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${coreLogFile}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+
+    <appender name="DAL"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${dalLogFile}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${dalLogFile}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+
+    <appender name="COMMON"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${commonLogFile}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${commonLogFile}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+
+
+    <logger name="com.monster.lochness.web" level="INFO">
+        <appender-ref ref="WEB"/>
+    </logger>
+
+    <logger name="com.monster.lochness.core" level="INFO">
+        <appender-ref ref="CORE"/>
+    </logger>
+
+    <logger name="com.monster.lochness.dal" level="INFO">
+        <appender-ref ref="DAL"/>
+    </logger>
+
+    <logger name="com.monster.lochness.common" level="INFO">
+        <appender-ref ref="COMMON"/>
+    </logger>
+
+
+    <root level="${rootLoggingLevel}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="All"/>
+    </root>
+
+
+</configuration>
