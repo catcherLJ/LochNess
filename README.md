@@ -1,2 +1,2 @@
 # LochNess
-This is a wiki system for programmer
+Simple style wiki system for programmer
